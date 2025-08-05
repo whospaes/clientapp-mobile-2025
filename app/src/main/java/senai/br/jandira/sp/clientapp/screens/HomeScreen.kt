@@ -11,9 +11,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -40,7 +43,7 @@ fun HomeScreen (modifier: Modifier = Modifier){
             BarraTitulo()
         },
         bottomBar = {
-            Text(text= "Barra inferior")
+            BarraNavegacao()
         },
         floatingActionButton = {
 
@@ -109,9 +112,50 @@ fun BarraNavegacao(modifier: Modifier = Modifier){
                     imageVector = Icons.Default.Home,
                     contentDescription = ""
                 )
+            },
+            label = {
+                Text(text = "Home")
+            }
+        )
+        NavigationBarItem(
+            selected = false,
+            onClick = {},
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.Favorite,
+                    contentDescription = ""
+                )
+            },
+            label = {
+                Text(text = "Favorite")
+            }
+        )
+        NavigationBarItem(
+            selected = false,
+            onClick = {},
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.List,
+                    contentDescription = ""
+                )
+            },
+            label = {
+                Text(text = "Menu")
             }
         )
     }
+}
+
+@Composable
+fun BotaoFlutuante(modifier: Modifier = Modifier){
+ FloatingActionButton (
+     onClick = {}
+ ){
+     Icon(
+         imageVector = Icons.Default
+     )
+ }
+
 }
 
 @Composable
