@@ -62,7 +62,7 @@ fun HomeScreen (modifier: Modifier = Modifier){
             BotaoFlutuante()
         }
     ){
-        paddingValues ->
+            paddingValues ->
         Column (
             modifier = Modifier
                 .padding(paddingValues)
@@ -82,10 +82,11 @@ fun HomeScreen (modifier: Modifier = Modifier){
                 Text(
                     text = "Lista de clientes"
                 )
-
-                LazyColumn {
-                    ClienteCard(10)
-                }git
+            }
+            LazyColumn {
+                items(10){
+                    ClienteCard()
+                }
             }
         }
     }
@@ -151,12 +152,12 @@ fun BarraTitulo(modifier: Modifier = Modifier){
                     modifier = Modifier
                         .size(60.dp),
                     shape = CircleShape
-                    ){
+                ){
                     Image(
-                    painter = painterResource(R.drawable.sigma),
-                    contentDescription = "",
-                    contentScale = ContentScale.Crop
-                ) }
+                        painter = painterResource(R.drawable.sigma),
+                        contentDescription = "",
+                        contentScale = ContentScale.Crop
+                    ) }
 
             }
         }
@@ -215,16 +216,16 @@ fun BarraNavegacao(modifier: Modifier = Modifier){
 
 @Composable
 fun BotaoFlutuante(modifier: Modifier = Modifier){
- FloatingActionButton (
-     onClick = {},
-     containerColor = MaterialTheme.colorScheme.tertiary
- ){
-     Icon(
-         imageVector = Icons.Default.Add,
-         contentDescription = "",
-         tint = MaterialTheme.colorScheme.onTertiary
-     )
- }
+    FloatingActionButton (
+        onClick = {},
+        containerColor = MaterialTheme.colorScheme.tertiary
+    ){
+        Icon(
+            imageVector = Icons.Default.Add,
+            contentDescription = "",
+            tint = MaterialTheme.colorScheme.onTertiary
+        )
+    }
 
 }
 
