@@ -3,46 +3,14 @@ package senai.br.jandira.sp.clientapp.screens
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -51,7 +19,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -63,7 +30,7 @@ import senai.br.jandira.sp.clientapp.service.RetrofitFactory
 import senai.br.jandira.sp.clientapp.ui.theme.ClientAppTheme
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier){
+fun HomeScreen(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
 
     Scaffold(
@@ -81,21 +48,23 @@ fun HomeScreen(modifier: Modifier = Modifier){
             modifier = Modifier
                 .padding(paddingValues)
                 .fillMaxSize()
-                .background(color = MaterialTheme.colorScheme.background)
+                .background(
+                    color = MaterialTheme.colorScheme.background
+                )
         ) {
             NavHost(
                 navController = navController,
                 startDestination = "home"
-            ){
-                composable(route = "home") { TelaHome(paddingValues)}
-                composable(route = "Form") { ClientForm()}
+            ) {
+                composable(route = "home") { TelaHome(paddingValues) }
+                composable(route = "form") { FormCliente(navController) }
             }
         }
     }
 }
 
 @Composable
-fun FormCliente() {
+fun FormCliente(navController: NavController) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -106,7 +75,7 @@ fun FormCliente() {
 }
 
 @Composable
-fun ClienteCard(cliente: Cliente){
+fun ClienteCard(cliente: Cliente) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -116,23 +85,25 @@ fun ClienteCard(cliente: Cliente){
                 end = 8.dp,
                 bottom = 4.dp
             ),
-        colors = CardDefaults
-            .cardColors(
-                containerColor = MaterialTheme.colorScheme.primary
-            )
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.primary
+        )
     ) {
-        Row (
-            modifier = Modifier
-                .fillMaxSize(),
+        Row(
+            modifier = Modifier.fillMaxSize(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column {
-                Text(text = cliente.nome,
-                    fontWeight = FontWeight.Bold
+                Text(
+                    text = cliente.nome,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onPrimary
                 )
-                Text(text = cliente.email,
-                    fontSize = 12.sp
+                Text(
+                    text = cliente.email,
+                    fontSize = 12.sp,
+                    color = MaterialTheme.colorScheme.onPrimary
                 )
             }
             Icon(
@@ -145,34 +116,29 @@ fun ClienteCard(cliente: Cliente){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BarraTiTulo (modifier: Modifier = Modifier) {
+fun BarraTiTulo(modifier: Modifier = Modifier) {
     TopAppBar(
         modifier = Modifier
             .fillMaxWidth()
             .padding(0.dp),
-        colors = TopAppBarDefaults
-            .topAppBarColors(
-                containerColor = MaterialTheme
-                    .colorScheme.primary
-            ),
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primary
+        ),
         title = {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier
-                    .fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Column {
                     Text(
                         text = "Texto atoa",
                         fontSize = 18.sp,
-                        color = MaterialTheme
-                            .colorScheme.onPrimary
+                        color = MaterialTheme.colorScheme.onPrimary
                     )
                     Text(
                         text = "email atoa",
                         fontSize = 16.sp,
-                        color = MaterialTheme
-                            .colorScheme.onPrimary
+                        color = MaterialTheme.colorScheme.onPrimary
                     )
                 }
                 Card(
@@ -186,14 +152,13 @@ fun BarraTiTulo (modifier: Modifier = Modifier) {
                         contentDescription = "foto perfil"
                     )
                 }
-
             }
         }
     )
 }
 
 @Composable
-fun TelaHome(paddingValues: PaddingValues){
+fun TelaHome(paddingValues: PaddingValues) {
     val clienteApi = RetrofitFactory().getClienteService()
 
     var clientes by remember {
@@ -202,12 +167,11 @@ fun TelaHome(paddingValues: PaddingValues){
 
     LaunchedEffect(Dispatchers.IO) {
         clientes = clienteApi.exibirTodos().await()
-        println(clientes)
     }
+
     Column(modifier = Modifier.fillMaxSize()) {
-        Row (
-            modifier = Modifier
-                .padding(16.dp)
+        Row(
+            modifier = Modifier.padding(16.dp)
         ) {
             Icon(
                 imageVector = Icons.Default.AccountBox,
@@ -215,22 +179,20 @@ fun TelaHome(paddingValues: PaddingValues){
                 tint = MaterialTheme.colorScheme.onBackground
             )
             Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                text = "Lista de clientes"
-            )
+            Text(text = "Lista de clientes")
         }
         LazyColumn {
-            items(clientes){ cliente ->
+            items(clientes) { cliente ->
                 ClienteCard(cliente)
             }
         }
     }
 }
+
 @Composable
-fun BarraNavegacao(navController: NavController, modifier: Modifier = Modifier){
+fun BarraNavegacao(navController: NavController, modifier: Modifier = Modifier) {
     NavigationBar(
-        containerColor = MaterialTheme
-            .colorScheme.primary
+        containerColor = MaterialTheme.colorScheme.primary
     ) {
         NavigationBarItem(
             selected = false,
@@ -239,14 +201,13 @@ fun BarraNavegacao(navController: NavController, modifier: Modifier = Modifier){
                 Icon(
                     imageVector = Icons.Default.Home,
                     contentDescription = "Home",
-                    tint = MaterialTheme
-                        .colorScheme.onPrimary
+                    tint = MaterialTheme.colorScheme.onPrimary
                 )
             },
             label = {
-                Text(text = "Home",
-                    color = MaterialTheme
-                        .colorScheme.onPrimary
+                Text(
+                    text = "Home",
+                    color = MaterialTheme.colorScheme.onPrimary
                 )
             }
         )
@@ -257,14 +218,13 @@ fun BarraNavegacao(navController: NavController, modifier: Modifier = Modifier){
                 Icon(
                     imageVector = Icons.Default.Favorite,
                     contentDescription = "Favorite",
-                    tint = MaterialTheme
-                        .colorScheme.onPrimary
+                    tint = MaterialTheme.colorScheme.onPrimary
                 )
             },
             label = {
-                Text(text = "Favorite",
-                    color = MaterialTheme
-                        .colorScheme.onPrimary
+                Text(
+                    text = "Favorite",
+                    color = MaterialTheme.colorScheme.onPrimary
                 )
             }
         )
@@ -275,14 +235,13 @@ fun BarraNavegacao(navController: NavController, modifier: Modifier = Modifier){
                 Icon(
                     imageVector = Icons.Default.Menu,
                     contentDescription = "Menu",
-                    tint = MaterialTheme
-                        .colorScheme.onPrimary
+                    tint = MaterialTheme.colorScheme.onPrimary
                 )
             },
             label = {
-                Text(text = "Menu",
-                    color = MaterialTheme
-                        .colorScheme.onPrimary
+                Text(
+                    text = "Menu",
+                    color = MaterialTheme.colorScheme.onPrimary
                 )
             }
         )
@@ -292,22 +251,20 @@ fun BarraNavegacao(navController: NavController, modifier: Modifier = Modifier){
 @Composable
 fun BotaoFlutuante(navController: NavController) {
     FloatingActionButton(
-        onClick = { navController.navigate("Form") },
-        containerColor = MaterialTheme
-            .colorScheme.tertiary
+        onClick = { navController.navigate("form") },
+        containerColor = MaterialTheme.colorScheme.tertiary
     ) {
         Icon(
             imageVector = Icons.Default.Add,
             contentDescription = "Botão Adicionar",
-            tint = MaterialTheme
-                .colorScheme.onTertiary
+            tint = MaterialTheme.colorScheme.onTertiary
         )
     }
 }
 
 @Composable
 @Preview
-private fun ClienteCardPreview(){
+private fun ClienteCardPreview() {
     ClientAppTheme {
         ClienteCard(Cliente())
     }
@@ -315,7 +272,7 @@ private fun ClienteCardPreview(){
 
 @Composable
 @Preview
-private fun BarraTituloPreview(){
+private fun BarraTituloPreview() {
     ClientAppTheme {
         BarraTiTulo()
     }
@@ -323,7 +280,7 @@ private fun BarraTituloPreview(){
 
 @Composable
 @Preview
-private fun BarraNavegacaoPreview(){
+private fun BarraNavegacaoPreview() {
     ClientAppTheme {
         BarraNavegacao(rememberNavController())
     }
@@ -331,7 +288,7 @@ private fun BarraNavegacaoPreview(){
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Composable
-private fun HomeScreenPreview(){
+private fun HomeScreenPreview() {
     ClientAppTheme {
         HomeScreen()
     }
