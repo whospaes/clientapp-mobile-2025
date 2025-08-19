@@ -27,8 +27,9 @@ import senai.br.jandira.sp.clientapp.model.Cliente
 import senai.br.jandira.sp.clientapp.service.RetrofitFactory
 
 @Composable
-fun ClientForm(modifier: Modifier = Modifier){
+fun ClientForm(modifier: Modifier = Modifier) {
 
+    // Variáveis de estado para utilizar o outlined
     var nomeCliente by remember {
         mutableStateOf("")
     }
@@ -37,8 +38,9 @@ fun ClientForm(modifier: Modifier = Modifier){
         mutableStateOf("")
     }
 
-    var isNomeError by remember{ mutableStateOf(false) }
-    var isEmailError by remember{ mutableStateOf(false) }
+    // Variáveis de estado para validar a entrada do usuário
+    var isNomeError by remember { mutableStateOf(false) }
+    var isEmailError by remember { mutableStateOf(false) }
 
     fun validar(): Boolean {
         isNomeError = nomeCliente.length < 1
@@ -46,71 +48,78 @@ fun ClientForm(modifier: Modifier = Modifier){
         return !isNomeError && !isEmailError
     }
 
-    val clienteAPI = RetrofitFactory().getClienteService()
-    
-    Column (
-        modifier = Modifier.fillMaxSize().padding(8.dp),
+    // Criar uma instância do RetrofitFactory
+    val clienteApi = RetrofitFactory().getClienteService()
 
-    ){
+    Column(
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxSize()
+    ) {
         OutlinedTextField(
             value = nomeCliente,
             onValueChange = { nome ->
                 nomeCliente = nome
             },
             label = {
-                Text(text = "Nome do cliente")
+                Text(text = "Digite seu nome")
             },
             supportingText = {
-                if(isNomeError) {
+                if (isNomeError) {
                     Text(text = "Nome do cliente é obrigatório")
+                }
+            },
+            trailingIcon = {
+                if (isNomeError){
+                    Icon(imageVector = Icons.Default.Info, contentDescription = "erro")
                 }
             },
             isError = isNomeError,
             modifier = Modifier.fillMaxWidth()
         )
-
         OutlinedTextField(
             value = emailCliente,
             onValueChange = { email ->
                 emailCliente = email
             },
             label = {
-                Text(text = "E-mail do cliente")
+                Text(text = "Digite seu e-mail")
             },
             supportingText = {
-                if(isEmailError) {
-                    Text(text = "E-mail do cliente é obrigatório")
+                if (isEmailError) {
+                    Text(text = "E-mail inválido")
                 }
             },
-            isError = isEmailError,
             trailingIcon = {
-                if(isEmailError) {
+                if (isEmailError){
                     Icon(imageVector = Icons.Default.Info, contentDescription = "erro")
                 }
             },
+            isError = isEmailError,
             modifier = Modifier.fillMaxWidth()
         )
-
         Button(
             onClick = {
-                if(validar()){
+                // Criar um cliente com os dados que o usuário digitou
+                if (validar()) {
                     val cliente = Cliente(
                         nome = nomeCliente,
                         email = emailCliente
                     )
-                    GlobalScope.launch(Dispatchers.IO){
-                        val novoCliente = clienteAPI.gravar(cliente).await()
+                    // Requisição POST para a API
+                    GlobalScope.launch(Dispatchers.IO) {
+                        val novoCliente = clienteApi.gravar(cliente).await()
                         println(novoCliente)
                     }
                 } else {
-                    println("Dados incorretos")
+                    println("****** Os dados estão incorretos")
                 }
             },
             modifier = Modifier
-                .fillMaxWidth()
                 .padding(top = 32.dp)
+                .fillMaxWidth()
         ) {
-            Text(text = "Gravar cliente")
+            Text(text = "Gravar Cliente")
         }
     }
 }
